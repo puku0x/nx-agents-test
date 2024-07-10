@@ -1,0 +1,43 @@
+name: Update Cache
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - package-lock.json
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        id: setup_nodejs
+        with:
+          node-version-file: '.tool-versions'
+      - uses: actions/cache@v4
+        id: cache
+        with:
+          path: node_modules
+          key: ${{ runner.arch }}-${{ runner.os }}-node-${{ steps.setup_nodejs.outputs.node-version }}-npm-${{ hashFiles('**/package-lock.json') }}
+      - uses: actions/cache@v4
+        if: steps.cache.outputs.cache-hit != 'true'
+        with:
+          path: |
+            ~/.npm
+            ~/.cache/Cypress
+            ~/.cache/ms-playwright
+          key: ${{ runner.arch }}-${{ runner.os }}-node-${{ steps.setup_nodejs.outputs.node-version }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.arch }}-${{ runner.os }}-node-${{ steps.setup_nodejs.outputs.node-version }}-npm-
+      - run: npx nx-cloud start-ci-run --distribute-on="3 linux-small-js"
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - run: npx nx-cloud stop-all-agents
