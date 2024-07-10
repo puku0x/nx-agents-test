@@ -36,7 +36,7 @@ jobs:
           key: ${{ runner.arch }}-${{ runner.os }}-node-${{ steps.setup_nodejs.outputs.node-version }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.arch }}-${{ runner.os }}-node-${{ steps.setup_nodejs.outputs.node-version }}-npm-
-      - run: npx nx-cloud start-ci-run --distribute-on="3 linux-small-js"
+      - run: npx nx-cloud start-ci-run --distribute-on="3 custom-linux-medium-js"
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
