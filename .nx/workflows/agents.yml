@@ -10,13 +10,13 @@ launch-templates:
         inputs:
           key: '"node20.11"'
           paths: ~/.npm
-          base-branch: 'develop'
+          base-branch: 'main'
       - name: Restore Node Modules Cache
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
         inputs:
           key: '"node20.11"|package-lock.json|yarn.lock|pnpm-lock.yaml'
           paths: node_modules
-          base-branch: 'develop'
+          base-branch: 'main'
       - name: Restore Browser Binary Cache
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
         inputs:
@@ -24,7 +24,7 @@ launch-templates:
           paths: |
             ~/.cache/Cypress
             ~/.cache/ms-playwright
-          base-branch: 'develop'
+          base-branch: 'main'
       - name: Install Node Modules (if needed)
         script: |
           if [ ! -d node_modules ]; then
