@@ -8,19 +8,19 @@ launch-templates:
       - name: Restore NPM Cache
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
         inputs:
-          key: '"node20.11"'
+          key: '"ubuntu22.04-node20.11"'
           paths: ~/.npm
           base-branch: 'main'
       - name: Restore Node Modules Cache
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
         inputs:
-          key: '"node20.11"|package-lock.json|yarn.lock|pnpm-lock.yaml'
+          key: '"ubuntu22.04-node20.11"|package-lock.json|yarn.lock|pnpm-lock.yaml'
           paths: node_modules
           base-branch: 'main'
       - name: Restore Browser Binary Cache
         uses: 'nrwl/nx-cloud-workflows/v4/workflow-steps/cache/main.yaml'
         inputs:
-          key: '"node20.11"|package-lock.json|yarn.lock|pnpm-lock.yaml|"browsers"'
+          key: '"ubuntu22.04-node20.11"|package-lock.json|yarn.lock|pnpm-lock.yaml|"browsers"'
           paths: |
             ~/.cache/Cypress
             ~/.cache/ms-playwright
