@@ -10,13 +10,13 @@ launch-templates:
         inputs:
           key: '"ubuntu22.04-node20.11"'
           paths: ~/.npm
-          base-branch: 'main'
+          base_branch: 'main'
       - name: Restore Node Modules Cache
         uses: 'nrwl/nx-cloud-workflows/v4.3/workflow-steps/cache/main.yaml'
         inputs:
           key: '"ubuntu22.04-node20.11"|package-lock.json|yarn.lock|pnpm-lock.yaml'
           paths: node_modules
-          base-branch: 'main'
+          base_branch: 'main'
       - name: Restore Browser Binary Cache
         uses: 'nrwl/nx-cloud-workflows/v4.3/workflow-steps/cache/main.yaml'
         inputs:
@@ -24,7 +24,7 @@ launch-templates:
           paths: |
             ~/.cache/Cypress
             ~/.cache/ms-playwright
-          base-branch: 'main'
+          base_branch: 'main'
       - name: Install Node Modules (if needed)
         script: |
           if [ ! -d node_modules ]; then
